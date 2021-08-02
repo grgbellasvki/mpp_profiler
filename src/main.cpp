@@ -4,7 +4,7 @@
 
 int main() {
     // Initialize M++
-    Mutation::MixtureOptions opts { "air11" };
+    Mutation::MixtureOptions opts { "air_5" };
     opts.setThermodynamicDatabase("NASA-9");
     opts.setStateModel("ChemNonEq1T");
     Mutation::Mixture mix(opts);
@@ -13,7 +13,7 @@ int main() {
     const int ns = mix.nSpecies();
 
     // Testing data
-    const int n = 10000;
+    const int n = 100000;
     // T [250, 40250] K and P [1.01325, 101325] approx
     Eigen::ArrayXd T = 20000.*(1.+Eigen::ArrayXd::Random(n)) + 250.;
     const Eigen::ArrayXd P = 0.5*101325.*(1.+Eigen::ArrayXd::Random(n)) + 1.01325;
@@ -33,7 +33,7 @@ int main() {
         // Setting the state
         mix.setState(rhos.col(i).data(), &T(i), set_state_with_rho_T);
 
-        //
+        // Thermodynamic functions for profiling
         Eigen::ArrayXd h = Eigen::ArrayXd::Zero(ns*mix.nEnergyEqns());
         mix.getEnthalpiesMass(h.data());
 
@@ -57,9 +57,9 @@ int main() {
     // Unnecessary but for mole fractions
     // const Eigen::ArrayXd dTdx = (T.tail(n-1)-T.head(n-1)) / dx;
 
-    for (int i = 0; i < n-1; i++) {
+    // for (int i = 0; i < n-1; i++) {
 
-    }
+    // }
 
     return 0;
 }
